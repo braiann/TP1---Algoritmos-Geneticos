@@ -17,7 +17,7 @@ prob_mut = 0.05
 def ruleta(f):
     numero = random.uniform(0,1)
     fitness_coincidente = 0.0
-    for i in range(11):
+    for i in range(10):
         if numero > fitness_coincidente:
             fitness_coincidente += f[i]
         else:
@@ -28,7 +28,7 @@ def ruleta(f):
 for i in range(10):
     x = random.randint(0, (2**30) - 1)
     pob_inicial.append(x) # como números decimales
-    pob_bin.append(str(bin(x))) # y como números binarios.
+    pob_bin.append((list(str(bin(x))))[2:]) # y como números binarios.
 
     f_obj.append((x/(2**30 - 1))**2) # Llena la tabla de función objetivo.
 
@@ -71,24 +71,23 @@ for i in range(10):
 print(resultado_ruleta)
 
 # Crossover
-for i in range(1, 10, 2):
-    #pdb.set_trace()
-    if random.randint(0, 100) < 75:
-        padre = pob_bin[resultado_ruleta[i] - 1]
-        madre = pob_bin[resultado_ruleta[i - 1] - 1]
-        punto_cross = random.randint(1,30)
-        hijo = list("0b" + str(padre[2:punto_cross + 2]) + str(madre[punto_cross + 2:32]))
-        hija = list("0b" + str(madre[2:punto_cross + 2]) + str(padre[punto_cross + 2:32]))
-        # Mutación
-        if random.randint(0, 100) < 5:
-            punto_mutacion = random.randint(2, 32)
-            hijo[punto_mutacion] = abs(int(hijo[punto_mutacion]) - 1)
-        if random.randint(0, 100) < 5:
-            punto_mutacion = random.randint(2, 32)
-            hija[punto_mutacion] = abs(int(hija[punto_mutacion]) - 1)
-        #pdb.set_trace()
-        pob_bin[resultado_ruleta[i] - 1] = ''.join(hija)
-        pob_bin[resultado_ruleta[i - 1] - 1] = ''.join(hijo)
+for i in range(0, 9, 2):
+    print(i)
+    padre = pob_bin[resultado_ruleta[i]]
+    madre = pob_bin[resultado_ruleta[i + 1]]
+    punto_cross = random.randint(0,28)
+    if random.randint(0, 100) < prob_cross*100:
+        pob_bin.append(padre[punto_cross:] + madre[:punto_cross])
+        pob_bin.append(madre[punto_cross:] + padre[:punto_cross])
+        pob_bin.remove(padre)
+        pob_bin.remove(madre)
+
+# Mutación
+for i in range(10):
+    if random.randint(0, 100) < prob_mut*100:
+        bit_cambiado = random.randint(0,29)
+        pob_bin[i][bit_cambiado] = str(abs(int(pob_bin[i][bit_cambiado]) - 1))
+
 
 suma_obj = 0
 promedio_obj = 0

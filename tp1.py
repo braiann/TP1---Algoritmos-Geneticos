@@ -4,7 +4,7 @@
 import random
 import pdb
 
-pob_inicial = []
+poblacion = []
 pob_bin = []
 f_obj = []
 fitness = []
@@ -25,6 +25,10 @@ def ruleta(f):
         else:
             return i
 
+# Muestra
+def mostrar_tablas(nom_a, a, nom_b, b, nom_c, c, nom_d, d):
+
+
 # Completa los ceros por delante de una lista argumento para que tenga 30 dígitos
 def completar_ceros(b):
     for i in range(30 - len(b)):
@@ -34,7 +38,7 @@ def completar_ceros(b):
 # Genera población inicial y la guarda
 for i in range(10):
     x = random.randint(0, (2**30) - 1)
-    pob_inicial.append(x) # como números decimales
+    poblacion.append(x) # como números decimales
     pob_bin.append(completar_ceros((list(str(bin(x))))[2:])) # y como números binarios de 30 dígitos.
     f_obj.append((x/(2**30 - 1))**2) # Llena la tabla de función objetivo.
 
@@ -54,7 +58,7 @@ print("POBLACIÓN INICIAL")
 print(pob_bin)
 print()
 print("x")
-print(pob_inicial)
+print(poblacion)
 print()
 print("FUNCIÓN OBJETIVO")
 print(f_obj)
@@ -99,7 +103,6 @@ for i in range(10):
         bit_cambiado = random.randint(0,29)
         pob_bin[i][bit_cambiado] = str(abs(int(pob_bin[i][bit_cambiado]) - 1))
 
-
 suma_obj = 0
 promedio_obj = 0
 max_obj = 0
@@ -123,7 +126,7 @@ print("POBLACIÓN INICIAL")
 print(pob_bin)
 print()
 print("x")
-print(pob_inicial)
+print(poblacion)
 print()
 print("FUNCIÓN OBJETIVO")
 print(f_obj)

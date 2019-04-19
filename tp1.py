@@ -94,12 +94,21 @@ for i in range(10):
         bit_cambiado = random.randint(0,29)
         pob_bin[i][bit_cambiado] = str(abs(int(pob_bin[i][bit_cambiado]) - 1))
 
+poblacion = []
+f_obj = []
+fitness = []
 suma_obj = 0
 promedio_obj = 0
 max_obj = 0
 suma_fit = 0
 promedio_fit = 0
 max_fit = 0
+
+for i in range(10):
+    poblacion.append(int(''.join(pob_bin[i]), 2))
+
+for i in range(10):
+    f_obj.append((poblacion[i]/(2**30 - 1))**2)
 
 suma_obj = sum(f_obj)
 promedio_obj = suma_obj/10

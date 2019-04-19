@@ -4,6 +4,7 @@
 import random
 import pdb
 
+pob_actual = 1
 poblacion = []
 pob_bin = []
 f_obj = []
@@ -25,9 +26,17 @@ def ruleta(f):
         else:
             return i
 
-# Muestra
-def mostrar_tablas(nom_a, a, nom_b, b, nom_c, c, nom_d, d):
-
+# Muestra tablas de valores, sumas, promedios, máximos
+def mostrar_tablas():
+    print("______________________________________________________________________________________")
+    print("POBLACIÓN", pob_actual, "\t\t\tX\t FUNCIÓN OBJETIVO\tFUNCIÓN FITNESS")
+    for i in range(10):
+        print(''.join(pob_bin[i]), poblacion[i], f_obj[i], "\t", fitness[i])
+    print("SUMA:\t\t\t\t\t", suma_obj, "\t", suma_fit)
+    print("PROMEDIO:\t\t\t\t", promedio_obj, "\t", promedio_fit)
+    print("MÁXIMO:\t\t\t\t\t", max_obj, "\t", max_obj)
+    print("______________________________________________________________________________________")
+    print()
 
 # Completa los ceros por delante de una lista argumento para que tenga 30 dígitos
 def completar_ceros(b):
@@ -54,32 +63,14 @@ suma_fit = sum(fitness)
 promedio_fit = suma_fit/10
 max_fit = max(fitness)
 
-print("POBLACIÓN INICIAL")
-print(pob_bin)
-print()
-print("x")
-print(poblacion)
-print()
-print("FUNCIÓN OBJETIVO")
-print(f_obj)
-print()
-print("Suma: ", suma_obj)
-print("Promedio: ", promedio_obj)
-print("Máximo: ", max_obj)
-print()
-print("FITNESS")
-print(fitness)
-print()
-print("Suma: ", suma_fit)
-print("Promedio: ", promedio_fit)
-print("Máximo: ", max_fit)
+mostrar_tablas()
 
 resultado_ruleta = []
 for i in range(10):
     resultado_ruleta.append(pob_bin[ruleta(fitness)])
 
-print("Ruleta:")
-print(resultado_ruleta)
+# print("Ruleta:")
+# print(resultado_ruleta)
 
 # Crossover
 for i in range(0, 9, 2):
@@ -122,22 +113,4 @@ suma_fit = sum(fitness)
 promedio_fit = suma_fit/10
 max_fit = max(fitness)
 
-print("POBLACIÓN INICIAL")
-print(pob_bin)
-print()
-print("x")
-print(poblacion)
-print()
-print("FUNCIÓN OBJETIVO")
-print(f_obj)
-print()
-print("Suma: ", suma_obj)
-print("Promedio: ", promedio_obj)
-print("Máximo: ", max_obj)
-print()
-print("FITNESS")
-print(fitness)
-print()
-print("Suma: ", suma_fit)
-print("Promedio: ", promedio_fit)
-print("Máximo: ", max_fit)
+mostrar_tablas()

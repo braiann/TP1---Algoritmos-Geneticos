@@ -81,15 +81,19 @@ print(resultado_ruleta)
 
 # Crossover
 for i in range(0, 9, 2):
-    print(i)
+    # pdb.set_trace()
     padre = pob_bin[resultado_ruleta[i]]
     madre = pob_bin[resultado_ruleta[i + 1]]
     punto_cross = random.randint(0,28)
     if random.randint(0, 100) < prob_cross*100:
+        # pdb.set_trace()
         pob_bin.append(padre[punto_cross:] + madre[:punto_cross])
         pob_bin.append(madre[punto_cross:] + padre[:punto_cross])
-        pob_bin.remove(padre)
-        pob_bin.remove(madre)
+        try:
+            pob_bin.remove(padre)
+            pob_bin.remove(madre)
+        except ValueError:
+            pass
 
 # Mutación
 for i in range(10):

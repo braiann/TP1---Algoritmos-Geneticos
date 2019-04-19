@@ -16,10 +16,8 @@ prob_mut = 0.05
 # lista usando el método de la ruleta.
 def ruleta(f):
     numero = random.uniform(0,1)
-    #print("numero = ", numero)
     fitness_coincidente = 0.0
     for i in range(10):
-        #print("fitness_coincidente = ", fitness_coincidente)
         if i >= 9:
             return i
         if numero > fitness_coincidente:
@@ -29,7 +27,6 @@ def ruleta(f):
 
 # Completa los ceros por delante de una lista argumento para que tenga 30 dígitos
 def completar_ceros(b):
-    #pdb.set_trace()
     for i in range(30 - len(b)):
         b.insert(0, '0')
     return b
@@ -75,15 +72,16 @@ print("Máximo: ", max_fit)
 
 resultado_ruleta = []
 for i in range(10):
-    resultado_ruleta.append(ruleta(fitness))
+    resultado_ruleta.append(pob_bin[ruleta(fitness)])
 
+print("Ruleta:")
 print(resultado_ruleta)
 
 # Crossover
 for i in range(0, 9, 2):
     # pdb.set_trace()
-    padre = pob_bin[resultado_ruleta[i]]
-    madre = pob_bin[resultado_ruleta[i + 1]]
+    padre = resultado_ruleta[i]
+    madre = resultado_ruleta[i + 1]
     punto_cross = random.randint(0,28)
     if random.randint(0, 100) < prob_cross*100:
         # pdb.set_trace()

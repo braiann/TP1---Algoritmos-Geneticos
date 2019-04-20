@@ -3,6 +3,7 @@
 
 import random
 import pdb
+from helpers import *
 
 pob_actual = 1
 poblacion = []
@@ -12,37 +13,6 @@ fitness = []
 suma = 0
 prob_cross = 0.75
 prob_mut = 0.05
-
-# Toma una lista "f" fitness, y devuelve un índice de un elemento de esa
-# lista usando el método de la ruleta.
-def ruleta(f):
-    numero = random.uniform(0,1)
-    fitness_coincidente = 0.0
-    for i in range(10):
-        if i >= 9:
-            return i
-        if numero > fitness_coincidente:
-            fitness_coincidente += f[i]
-        else:
-            return i
-
-# Muestra tablas de valores, sumas, promedios, máximos
-def mostrar_tablas():
-    print("______________________________________________________________________________________")
-    print("POBLACIÓN", pob_actual, "\t\t\tX\t FUNCIÓN OBJETIVO\tFUNCIÓN FITNESS")
-    for i in range(10):
-        print(''.join(pob_bin[i]), poblacion[i], f_obj[i], "\t", fitness[i])
-    print("SUMA:\t\t\t\t\t", suma_obj, "\t", suma_fit)
-    print("PROMEDIO:\t\t\t\t", promedio_obj, "\t", promedio_fit)
-    print("MÁXIMO:\t\t\t\t\t", max_obj, "\t", max_obj)
-    print("______________________________________________________________________________________")
-    print()
-
-# Completa los ceros por delante de una lista argumento para que tenga 30 dígitos
-def completar_ceros(b):
-    for i in range(30 - len(b)):
-        b.insert(0, '0')
-    return b
 
 # Genera población inicial y la guarda
 for i in range(10):
@@ -63,7 +33,7 @@ suma_fit = sum(fitness)
 promedio_fit = suma_fit/10
 max_fit = max(fitness)
 
-mostrar_tablas()
+mostrar_tablas(pob_actual, pob_bin, poblacion, f_obj, fitness)
 
 resultado_ruleta = []
 for i in range(10):
@@ -122,4 +92,4 @@ suma_fit = sum(fitness)
 promedio_fit = suma_fit/10
 max_fit = max(fitness)
 
-mostrar_tablas()
+mostrar_tablas(pob_actual, pob_bin, poblacion, f_obj, fitness)

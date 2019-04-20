@@ -2,10 +2,9 @@
 ## Braian Villasanti, Rafael Verde
 
 import random
-import pdb
-from helpers import *
+import pdb # BORRAR en versión final
+from helpers import ruleta, mostrar_tablas, completar_ceros, crossover, mutar
 
-pob_actual = 1
 poblacion = []
 pob_bin = []
 f_obj = []
@@ -21,75 +20,48 @@ for i in range(10):
     pob_bin.append(completar_ceros((list(str(bin(x))))[2:])) # y como números binarios de 30 dígitos.
     f_obj.append((x/(2**30 - 1))**2) # Llena la tabla de función objetivo.
 
-suma_obj = sum(f_obj)
-promedio_obj = suma_obj/10
-max_obj = max(f_obj)
-
 # Genera resultados de función fitness.
 for i in range(10):
-    fitness.append(f_obj[i] / suma_obj)
+    fitness.append(f_obj[i] / sum(f_obj))
 
-suma_fit = sum(fitness)
-promedio_fit = suma_fit/10
-max_fit = max(fitness)
+for generacion in range(200):
+    if generacion == 19 or generacion == 99 or generacion == 199:
+        mostrar_tablas(generacion + 1, pob_bin, poblacion, f_obj, fitness)
 
-mostrar_tablas(pob_actual, pob_bin, poblacion, f_obj, fitness)
+    resultado_ruleta = []
+    for i in range(10):
+        resultado_ruleta.append(pob_bin[ruleta(fitness)])
 
-resultado_ruleta = []
-for i in range(10):
-    resultado_ruleta.append(pob_bin[ruleta(fitness)])
+    # Crossover
+    for i in range(0, 9, 2):
+        padre = resultado_ruleta[i]
+        madre = resultado_ruleta[i + 1]
+        punto_cross = random.randint(0,28)
+        crossover(pob_bin, padre, madre, punto_cross, prob_cross)
 
-# print("Ruleta:")
-# print(resultado_ruleta)
+    # Mutación
+    for i in range(10):
+        mutar(pob_bin[i], prob_mut)
 
-# Crossover
-for i in range(0, 9, 2):
-    # pdb.set_trace()
-    padre = resultado_ruleta[i]
-    madre = resultado_ruleta[i + 1]
-    punto_cross = random.randint(0,28)
-    if random.randint(0, 100) < prob_cross*100:
-        # pdb.set_trace()
-        pob_bin.append(padre[punto_cross:] + madre[:punto_cross])
-        pob_bin.append(madre[punto_cross:] + padre[:punto_cross])
-        try:
-            pob_bin.remove(padre)
-            pob_bin.remove(madre)
-        except ValueError:
-            pass
+    # Resetear todos los datos menos los de la población binaria
+    poblacion = []
+    f_obj = []
+    fitness = []
+    suma_obj = 0
+    promedio_obj = 0
+    max_obj = 0
+    suma_fit = 0
+    promedio_fit = 0
+    max_fit = 0
 
-# Mutación
-for i in range(10):
-    if random.randint(0, 100) < prob_mut*100:
-        bit_cambiado = random.randint(0,29)
-        pob_bin[i][bit_cambiado] = str(abs(int(pob_bin[i][bit_cambiado]) - 1))
+    # Generar la nueva población en números enteros
+    for i in range(10):
+        poblacion.append(int(''.join(pob_bin[i]), 2))
 
-poblacion = []
-f_obj = []
-fitness = []
-suma_obj = 0
-promedio_obj = 0
-max_obj = 0
-suma_fit = 0
-promedio_fit = 0
-max_fit = 0
+    # Genera resultados de la función objetivo
+    for i in range(10):
+        f_obj.append((poblacion[i]/(2**30 - 1))**2)
 
-for i in range(10):
-    poblacion.append(int(''.join(pob_bin[i]), 2))
-
-for i in range(10):
-    f_obj.append((poblacion[i]/(2**30 - 1))**2)
-
-suma_obj = sum(f_obj)
-promedio_obj = suma_obj/10
-max_obj = max(f_obj)
-
-# Genera resultados de función fitness.
-for i in range(10):
-    fitness.append(f_obj[i] / suma_obj)
-
-suma_fit = sum(fitness)
-promedio_fit = suma_fit/10
-max_fit = max(fitness)
-
-mostrar_tablas(pob_actual, pob_bin, poblacion, f_obj, fitness)
+    # Genera resultados de función fitness.
+    for i in range(10):
+        fitness.append(f_obj[i] / sum(f_obj))

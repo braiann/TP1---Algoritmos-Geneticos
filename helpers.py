@@ -31,3 +31,21 @@ def completar_ceros(b):
     for i in range(30 - len(b)):
         b.insert(0, '0')
     return b
+
+# Hay una probabilidad "prob" de que se haga el crossover entre "a" y "b" en el punto "x" en la población "p"
+def crossover(p, a, b, x, prob):
+    if random.randint(0, 100) < prob*100:
+        # pdb.set_trace()
+        p.append(a[x:] + b[:x])
+        p.append(b[x:] + a[:x])
+        try:
+            p.remove(a)
+            p.remove(b)
+        except ValueError:
+            pass
+
+# Hay una probabilidad "prob" de que exista una mutación en un bit aleatorio del cromosoma
+def mutar(cromosoma, prob):
+    if random.randint(0, 100) < prob*100:
+        bit_cambiado = random.randint(0,29)
+        cromosoma[bit_cambiado] = str(abs(int(cromosoma[bit_cambiado]) - 1))

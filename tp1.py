@@ -4,6 +4,7 @@
 import random
 import pdb # BORRAR en versión final
 from helpers import ruleta, mostrar_tablas, completar_ceros, crossover, mutar
+import matplotlib.pyplot as plt
 
 poblacion = []
 pob_bin = []
@@ -11,7 +12,9 @@ f_obj = []
 fitness = []
 suma = 0
 prob_cross = 0.75
-prob_mut = 0.05
+prob_mut = 0.05 
+parametro = []
+x = []
 
 # Genera población inicial y la guarda
 for i in range(10):
@@ -31,12 +34,12 @@ for generacion in range(200):
     resultado_ruleta = []
     for i in range(10):
         resultado_ruleta.append(pob_bin[ruleta(fitness)])
-
+ 
     # Crossover
     for i in range(0, 9, 2):
         padre = resultado_ruleta[i]
-        madre = resultado_ruleta[i + 1]
-        punto_cross = random.randint(0,28)
+        madre = resultado_ruleta[i + 1]1
+           punto_cross = random.randint(0,28)
         crossover(pob_bin, padre, madre, punto_cross, prob_cross)
 
     # Mutación
@@ -65,3 +68,9 @@ for generacion in range(200):
     # Genera resultados de función fitness.
     for i in range(10):
         fitness.append(f_obj[i] / sum(f_obj))
+
+    x_minimos = []
+    x_promedios= []
+    x_maximos = []
+
+    plrot.

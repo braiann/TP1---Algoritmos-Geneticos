@@ -1,5 +1,6 @@
 import random
 import statistics
+import webbrowser
 
 # Toma una lista "f" fitness, y devuelve un índice de un elemento de esa
 # lista usando el método de la ruleta.
@@ -49,3 +50,56 @@ def mutar(cromosoma, prob):
     if random.randint(0, 100) < prob*100:
         bit_cambiado = random.randint(0,29)
         cromosoma[bit_cambiado] = str(abs(int(cromosoma[bit_cambiado]) - 1))
+
+# Crea un archivo HTML que muestra la información que se pide.
+def mostrar_info(cromosoma_final, maximos, minimos, promedios):
+    f = open('resultados.html', 'w')
+
+    html_inicial = """<html>
+        <head>
+            <title>Trabajo Práctico N°1</title>
+        </head>
+        <body>
+            <h1>Trabajo Práctico N°1</h1>
+            <h2>Algoritmos Genéticos</h2>
+            <p>Rafael Verde</p>
+            <p>Braian Villasanti</p>"""
+
+    cromosoma_maximo = """<p><b>Cromosoma máximo: </b>%s</p>
+            <h1>Valores de cada población</h1>
+            <p></p>""" % cromosoma_final
+
+    header_tabla_min_max_avg = """
+            <table>
+                <tr>
+                    <th>Generación</th>
+                    <th>Máximos</th>
+                    <th>Mínimos</th>
+                    <th>Promedios</th>
+                </tr>
+        """
+    
+    f.write(html_inicial)
+    f.write(cromosoma_maximo)
+    f.write(header_tabla_min_max_avg)
+
+    for i in range(200):
+        tabla_min_max_avg = """<tr>
+            <td>%d</td>
+            <td>%f</td>
+            <td>%f</td>
+            <td>%f</td>
+        </tr>""" %(i + 1, maximos[i], minimos[i], promedios[i])
+        f.write(tabla_min_max_avg)
+
+    pie_tabla_min_max_avg = """</table>"""
+
+    html_final = """</body>
+    </html>"""
+
+    
+    f.write(pie_tabla_min_max_avg)
+    f.write(html_final)
+    f.close()
+
+    webbrowser.open_new_tab('resultados.html')

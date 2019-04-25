@@ -3,8 +3,9 @@
 
 import random
 import pdb # BORRAR en versión final
-from helpers import ruleta, mostrar_tablas, completar_ceros, crossover, mutar
+from helpers import ruleta, mostrar_tablas, completar_ceros, crossover, mutar, mostrar_info
 import matplotlib.pyplot as plt
+import statistics
 
 poblacion = []
 pob_bin = []
@@ -15,6 +16,9 @@ prob_cross = 0.75
 prob_mut = 0.05 
 parametro = []
 x = []
+x_minimos = []
+x_promedios= []
+x_maximos = []
 
 # Genera población inicial y la guarda
 for i in range(10):
@@ -38,25 +42,23 @@ for generacion in range(200):
     # Crossover
     for i in range(0, 9, 2):
         padre = resultado_ruleta[i]
-        madre = resultado_ruleta[i + 1]1
-           punto_cross = random.randint(0,28)
+        madre = resultado_ruleta[i + 1]
+        punto_cross = random.randint(0,28)
         crossover(pob_bin, padre, madre, punto_cross, prob_cross)
 
     # Mutación
     for i in range(10):
         mutar(pob_bin[i], prob_mut)
+    
+    x_maximos.append(max(f_obj))
+    x_minimos.append(min(f_obj))
+    x_promedios.append(statistics.mean(f_obj))
 
     # Resetear todos los datos menos los de la población binaria
     poblacion = []
     f_obj = []
     fitness = []
-    suma_obj = 0
-    promedio_obj = 0
-    max_obj = 0
-    suma_fit = 0
-    promedio_fit = 0
-    max_fit = 0
-
+    
     # Generar la nueva población en números enteros
     for i in range(10):
         poblacion.append(int(''.join(pob_bin[i]), 2))
@@ -69,8 +71,4 @@ for generacion in range(200):
     for i in range(10):
         fitness.append(f_obj[i] / sum(f_obj))
 
-    x_minimos = []
-    x_promedios= []
-    x_maximos = []
-
-    plrot.
+mostrar_info(''.join(max(pob_bin)), x_maximos, x_minimos, x_promedios)

@@ -67,41 +67,68 @@ def mostrar_info(cromosoma_final, maximos, minimos, promedios):
                 <p>Rafael Verde</p>
                 <p>Braian Villasanti</p>"""
 
+    # Muestra el cromosoma máximo final.
     cromosoma_maximo = """<p><b>Cromosoma máximo: </b><div class="monoespaciado">%s</div></p>
-            <h1>Valores de cada población</h1>
-            <p></p>""" % cromosoma_final
+            <h1>Valores de cada población</h1>""" % cromosoma_final
 
-    header_tabla_min_max_avg = """
-            <table>
-                <tr>
-                    <th>Generación</th>
-                    <th>Máximos</th>
-                    <th>Mínimos</th>
-                    <th>Promedios</th>
-                </tr>
+    # Muestra el valor máximo, mínimo, y promedio de cada población.
+    header_tabla = """
+    <table>
+        <tr>
+            <th>Generación</th>
+            <th>Máximos</th>
+            <th>Mínimos</th>
+            <th>Promedios</th>
+        </tr>
         """
     
     f.write(html_inicial)
     f.write(cromosoma_maximo)
-    f.write(header_tabla_min_max_avg)
+    f.write(header_tabla)
 
     for i in range(200):
-        tabla_min_max_avg = """<tr>
+        tabla = """<tr>
             <td>%d</td>
             <td>%f</td>
             <td>%f</td>
             <td>%f</td>
         </tr>""" %(i + 1, maximos[i], minimos[i], promedios[i])
-        f.write(tabla_min_max_avg)
+        f.write(tabla)
 
-    pie_tabla_min_max_avg = """</table>"""
+    # Muestra tablas de máximos, mínimos, y promedios para 20, 100, y 200 corridas.
+    tabla2 = """</table>
+    <h1>Valores para las 20, 100, y 200 corridas</h1>
+    <table>
+        <tr>
+            <th>Generación</th>
+            <th>Máximos</th>
+            <th>Mínimos</th>
+            <th>Promedios</th>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td>%f</td>
+            <td>%f</td>
+            <td>%f</td>
+        </tr>
+        <tr>
+            <td>100</td>
+            <td>%f</td>
+            <td>%f</td>
+            <td>%f</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>%f</td>
+            <td>%f</td>
+            <td>%f</td>
+        </tr>""" % (maximos[19], minimos[19], promedios[19], maximos[99], minimos[99], promedios[99], maximos[199], minimos[199], promedios[199])
 
     html_final = """</div>
     </body>
     </html>"""
 
-    
-    f.write(pie_tabla_min_max_avg)
+    f.write(tabla2)
     f.write(html_final)
     f.close()
 

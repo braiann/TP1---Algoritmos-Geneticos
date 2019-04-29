@@ -58,14 +58,16 @@ def mostrar_info(cromosoma_final, maximos, minimos, promedios):
     html_inicial = """<html>
         <head>
             <title>Trabajo Práctico N°1</title>
+            <link rel="stylesheet" type="text/css" href="styles.css">
         </head>
         <body>
-            <h1>Trabajo Práctico N°1</h1>
-            <h2>Algoritmos Genéticos</h2>
-            <p>Rafael Verde</p>
-            <p>Braian Villasanti</p>"""
+            <div>
+                <h1>Trabajo Práctico N°1</h1>
+                <h2>Algoritmos Genéticos</h2>
+                <p>Rafael Verde</p>
+                <p>Braian Villasanti</p>"""
 
-    cromosoma_maximo = """<p><b>Cromosoma máximo: </b>%s</p>
+    cromosoma_maximo = """<p><b>Cromosoma máximo: </b><div class="monoespaciado">%s</div></p>
             <h1>Valores de cada población</h1>
             <p></p>""" % cromosoma_final
 
@@ -94,7 +96,8 @@ def mostrar_info(cromosoma_final, maximos, minimos, promedios):
 
     pie_tabla_min_max_avg = """</table>"""
 
-    html_final = """</body>
+    html_final = """</div>
+    </body>
     </html>"""
 
     

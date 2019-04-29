@@ -1,6 +1,7 @@
 import random
 import statistics
 import webbrowser
+import matplotlib.pyplot as plt
 
 # Toma una lista "f" fitness, y devuelve un índice de un elemento de esa
 # lista usando el método de la ruleta.
@@ -55,7 +56,8 @@ def mutar(cromosoma, prob):
 def mostrar_info(cromosoma_final, maximos, minimos, promedios):
     f = open('resultados.html', 'w')
 
-    html_inicial = """<html>
+    html_inicial = """<!DOCTYPE html>
+    <html>
         <head>
             <title>Trabajo Práctico N°1</title>
             <link rel="stylesheet" type="text/css" href="styles.css">
@@ -122,10 +124,39 @@ def mostrar_info(cromosoma_final, maximos, minimos, promedios):
             <td>%f</td>
             <td>%f</td>
             <td>%f</td>
-        </tr>""" % (maximos[19], minimos[19], promedios[19], maximos[99], minimos[99], promedios[99], maximos[199], minimos[199], promedios[199])
+        </tr>
+    </table>""" % (maximos[19], minimos[19], promedios[19], maximos[99], minimos[99], promedios[99], maximos[199], minimos[199], promedios[199])
 
-    html_final = """</div>
-    </body>
+    plt.plot(range(200), maximos)
+    plt.xlim(0, 200)
+    plt.ylim(0, 1)
+    plt.autoscale(False)
+    plt.savefig('graficos/maximos.svg', bbox_inches='tight')
+    plt.clf()
+    
+
+    plt.plot(range(200), minimos)
+    plt.xlim(0, 200)
+    plt.ylim(0, 1)
+    plt.autoscale(False)
+    plt.savefig('graficos/minimos.svg', bbox_inches='tight')
+    plt.clf()
+
+    plt.plot(range(200), promedios)
+    plt.xlim(0, 200)
+    plt.ylim(0, 1)
+    plt.autoscale(False)
+    plt.savefig('graficos/promedios.svg', bbox_inches='tight')
+
+    html_final = """
+                <h1>Máximos<h1>
+                <img src="graficos/maximos.svg">
+                <h1>Mínimos<h1>
+                <img src="graficos/minimos.svg">
+                <h1>Promedios<h1>
+                <img src="graficos/promedios.svg">
+            </div>
+        </body>
     </html>"""
 
     f.write(tabla2)

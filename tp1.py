@@ -4,7 +4,6 @@
 import random
 import pdb # BORRAR en versión final
 from helpers import ruleta, mostrar_tablas, completar_ceros, crossover, mutar, mostrar_info
-import matplotlib.pyplot as plt
 import statistics
 
 poblacion = []

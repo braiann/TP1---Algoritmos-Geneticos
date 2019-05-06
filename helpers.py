@@ -2,16 +2,14 @@ import random
 import statistics
 import webbrowser
 import matplotlib.pyplot as plt
-import nro
-nro = nro.n #Nro de cromosomas en una poblacion
 
 # Toma una lista "f" fitness, y devuelve un índice de un elemento de esa
 # lista usando el método de la ruleta.
 def ruleta(f):
     numero = random.uniform(0,1)
     fitness_coincidente = 0.0
-    for i in range(nro):
-        if i >= nro-1:
+    for i in range(10):
+        if i >= 9:
             return i
         if numero > fitness_coincidente:
             fitness_coincidente += f[i]
@@ -22,10 +20,10 @@ def ruleta(f):
 def mostrar_tablas(pob_actual, pob_bin, poblacion, f_obj, fitness):
     print("______________________________________________________________________________________")
     print("POBLACIÓN", pob_actual, "\t\t\tX\t FUNCIÓN OBJETIVO\tFUNCIÓN FITNESS")
-    for i in range(nro):
+    for i in range(10):
         print(''.join(pob_bin[i]), poblacion[i], f_obj[i], "\t", fitness[i])
     print("SUMA:\t\t\t\t\t", sum(f_obj), "\t", sum(fitness))
-    print("PROMEDIO:\t\t\t\t", statistics.mean(f_obj) / nro, "\t", statistics.mean(fitness))
+    print("PROMEDIO:\t\t\t\t", statistics.mean(f_obj) / 10, "\t", statistics.mean(fitness))
     print("MÁXIMO:\t\t\t\t\t", max(f_obj), "\t", max(fitness))
     print("______________________________________________________________________________________")
     print()
@@ -75,8 +73,8 @@ def mostrar_info(cromosoma_final, maximos, minimos, promedios, prob_cross, prob_
     cromosoma_maximo = """<p><b>Cromosoma máximo: </b><div class="monoespaciado">%s</div></p>""" % cromosoma_final
 
     #Muestra los valores de las probabilidades
-    valores = """<p><b>Probabilidad de crossover: </b>%s <b>Probabilidad de mutacion: </b>%s</p>
-    <h1>Tablas de valores</h1>""" %(prob_cross, prob_mut)
+    valores = """<p><b>Probabilidad de crossover: </b>%d&#37 <b>Probabilidad de mutacion: </b>%d&#37 </p>
+    <h1>Tablas de valores</h1>""" %(prob_cross*100, prob_mut*100)
 
     # Muestra el valor máximo, mínimo, y promedio de cada población.
     header_tabla = """

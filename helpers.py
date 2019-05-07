@@ -2,16 +2,14 @@ import random
 import statistics
 import webbrowser
 import matplotlib.pyplot as plt
-import nro
-nro = nro.n #Nro de cromosomas en una poblacion
 
 # Toma una lista "f" fitness, y devuelve un índice de un elemento de esa
 # lista usando el método de la ruleta.
 def ruleta(f):
     numero = random.uniform(0,1)
     fitness_coincidente = 0.0
-    for i in range(nro):
-        if i >= nro-1:
+    for i in range(10):
+        if i >= 9:
             return i
         if numero > fitness_coincidente:
             fitness_coincidente += f[i]

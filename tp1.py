@@ -19,7 +19,6 @@ x_promedios= []
 x_maximos = []
 n = 10 # Tamaño de la población
 
-
 # Creación de argumentos para los comandos de cmd
 parser.add_argument("-c", "--crossover", help="Cambia el valor de la probabilidad de crossover", type=int)
 parser.add_argument("-m", "--mutacion", help="Cambia el valor de la probabilidad de mutación", type=int)
@@ -49,7 +48,7 @@ for generacion in range(200):
         resultado_ruleta.append(pob_bin[ruleta(fitness)])
  
     # Crossover
-    for i in range(0, n-1, 2):
+    for i in range(0, 9, 2):
         padre = resultado_ruleta[i]
         madre = resultado_ruleta[i + 1]
         punto_cross = random.randint(0,28)

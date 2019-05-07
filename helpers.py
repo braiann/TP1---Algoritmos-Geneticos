@@ -61,8 +61,8 @@ def mostrar_info(cromosoma_final, maximos, minimos, promedios, prob_cross, prob_
     cromosoma_maximo = """<p><b>Cromosoma máximo: </b><div class="monoespaciado">%s</div></p>""" % cromosoma_final
 
     #Muestra los valores de las probabilidades
-    valores = """<p><b>Probabilidad de crossover: </b>%s <b>Probabilidad de mutacion: </b>%s</p>
-    <h1>Tablas de valores</h1>""" %(prob_cross, prob_mut)
+    valores = """<p><b>Probabilidad de crossover: </b>%d&#37 <b>Probabilidad de mutacion: </b>%d&#37 </p>
+    <h1>Tablas de valores</h1>""" %(prob_cross*100, prob_mut*100)
 
     # Muestra el valor máximo, mínimo, y promedio de cada población.
     header_tabla = """

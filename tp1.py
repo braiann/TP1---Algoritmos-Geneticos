@@ -24,11 +24,20 @@ parser.add_argument("-c", "--crossover", help="Cambia el valor de la probabilida
 parser.add_argument("-m", "--mutacion", help="Cambia el valor de la probabilidad de mutación", type=int)
 args = parser.parse_args()
 
+#Verfica si se llamó a la flag y si esta cumple con los requisitos; si no cumple termina el programa
 if args.crossover:
-	prob_cross = args.crossover
+	if args.crossover <= 100 and args.crossover >= 0:
+		prob_cross = args.crossover/100
+	else:
+		print("! El nro de crossover tiene que ser entre 0 y 100")
+		exit()
 
 if args.mutacion:
-	prob_mut = args.mutacion
+	if args.mutacion <= 100 and args.mutacion >= 0:
+		prob_mut = args.mutacion/100
+	else:
+		print("! El nro de mutacion tiene que ser entre 0 y 100")
+		exit()
 
 # Genera población inicial y la guarda
 for i in range(n):

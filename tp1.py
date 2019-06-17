@@ -2,7 +2,7 @@
 ## Braian Villasanti, Rafael Verde
 
 import random
-from helpers import ruleta, completar_ceros, crossover, mutar, mostrar_info
+from helpers import ruleta, completar_ceros, crossover, mutar, mostrar_info, sort
 import statistics
 import argparse
 
@@ -55,7 +55,10 @@ for generacion in range(200):
     resultado_ruleta = [] # Lista que guarda los padres que resultarán de la selección.
     for i in range(n):
         resultado_ruleta.append(pob_bin[ruleta(fitness)])
- 
+
+	#max_cromosoma_1 = sort(fitness)[0]
+	#max_cromosoma_2 = sort(fitness)[1]
+
     # Crossover
     for i in range(0, 9, 2):
         padre = resultado_ruleta[i]
@@ -66,7 +69,7 @@ for generacion in range(200):
     # Mutación
     for i in range(n):
         mutar(pob_bin[i], prob_mut)
-    
+
     x_maximos.append(max(f_obj))
     x_minimos.append(min(f_obj))
     x_promedios.append(statistics.mean(f_obj))
@@ -75,7 +78,7 @@ for generacion in range(200):
     poblacion = []
     f_obj = []
     fitness = []
-    
+
     # Generar la nueva población en números enteros
     for i in range(n):
         poblacion.append(int(''.join(pob_bin[i]), 2))

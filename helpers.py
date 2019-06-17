@@ -24,21 +24,46 @@ def completar_ceros(b):
 
 # Hay una probabilidad "prob" de que se haga el crossover entre "a" y "b" en el punto "x" en la población "p"
 def crossover(p, a, b, x, prob):
+    h1 = []
+    h2 = []
     if random.randint(0, 100) < prob*100:
-        # pdb.set_trace()
-        p.append(a[x:] + b[:x])
-        p.append(b[x:] + a[:x])
-        try:
-            p.remove(a)
-            p.remove(b)
-        except ValueError:
-            pass
+        for i in range(30):
+            if (i < x):
+                h1.append(a[i])
+                h2.append(b[i])
+            else:
+                h1.append(b[i])
+                h2.append(a[i])
+        p.append(h1)
+        p.append(h2)
+    else:
+        p.append(a)
+        p.append(b)
 
 # Hay una probabilidad "prob" de que exista una mutación en un bit aleatorio del cromosoma
 def mutar(cromosoma, prob):
     if random.randint(0, 100) < prob*100:
         bit_cambiado = random.randint(0,29)
         cromosoma[bit_cambiado] = str(abs(int(cromosoma[bit_cambiado]) - 1))
+
+# Ordena el array usando quicksort
+def sort(a):
+    menos = []
+    igual = []
+    mas = []
+    if len(a) > 1:
+        pivote = a[0]
+        for i in a:
+            if i < pivote:
+                menos.append(i)
+            elif i == pivote:
+                igual.append(i)
+            elif i > pivote:
+                mas.append(i)
+        return sort(mas)+igual+sort(menos)
+    else:
+        return a
+
 
 # Crea un archivo HTML que muestra la información que se pide.
 def mostrar_info(cromosoma_final, maximos, minimos, promedios, prob_cross, prob_mut):
@@ -74,7 +99,7 @@ def mostrar_info(cromosoma_final, maximos, minimos, promedios, prob_cross, prob_
             <th>Promedios</th>
         </tr>
         """
-    
+
     f.write(html_inicial)
     f.write(cromosoma_maximo)
     f.write(valores)
@@ -125,7 +150,7 @@ def mostrar_info(cromosoma_final, maximos, minimos, promedios, prob_cross, prob_
     plt.autoscale(False)
     plt.savefig('graficos/maximos.svg', bbox_inches='tight')
     plt.clf()
-    
+
 
     plt.plot(range(200), minimos)
     plt.xlim(0, 200)

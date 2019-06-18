@@ -1,8 +1,14 @@
 ## TRABAJO PRÁCTICO 1
 ## Braian Villasanti, Rafael Verde
+"""Notas: -combine este tp con lo que hiciste de la clase cromosoma
+          -consecuentemente, la pob_bin ahora es un string
+          -la pob_bin solia guardar todos los individuos de todas las poblaciones, ya no
+          -consecuentemente, no podemos obtener el mayor cromosoma final
+          -y como la pob_bin guarda strings, no puedo guardar los maximos de las poblaciones (ver lineas 116 - 119)"""
 
 import random
 from helpers import ruleta, completar_ceros, crossover, mutar, mostrar_info, sort
+from clases.cromosoma import Cromosoma
 import statistics
 import argparse
 
@@ -13,10 +19,10 @@ f_obj = [] # Resultados de la función objetivo para cada cromosoma
 fitness = [] # Resultados de la función fitness
 prob_cross = 0.75
 prob_mut = 0.05
-x = []
 x_minimos = []
 x_promedios= []
 x_maximos = []
+max_crom = []
 n = 10 # Tamaño de la población
 
 # Creación de argumentos para los comandos de cmd
@@ -39,23 +45,38 @@ if args.mutacion:
 		print("! El nro de mutacion tiene que ser entre 0 y 100")
 		exit()
 
-# Genera población inicial y la guarda
+# Genera la población inicial.
 for i in range(n):
-    x = random.randint(0, (2**30) - 1)
-    poblacion.append(x) # como números decimales
-    pob_bin.append(completar_ceros((list(str(bin(x))))[2:])) # y como números binarios de 30 dígitos.
-    f_obj.append((x/(2**30 - 1))**2) # Llena la tabla de función objetivo.
+    pob_bin.append(Cromosoma())
 
-# Genera resultados de función fitness.
+# Genera la poblacion en enteros
 for i in range(n):
-    fitness.append(f_obj[i] / sum(f_obj))
+    poblacion.append(pob_bin[i].entero())
+
+# Genera los resultados de la función objetivo.
+for i in range(n):
+    f_obj.append(pob_bin[i].f_obj())
+
+# Genera los resultados de la función fitness.
+for i in range(n):
+    fitness.append(f_obj[i]/sum(f_obj))
 
 # Bucle de 200 iteraciones para cada iteración del algoritmo.
 for generacion in range(200):
     resultado_ruleta = [] # Lista que guarda los padres que resultarán de la selección.
+    nueva_pob_bin = []
     for i in range(n):
         resultado_ruleta.append(pob_bin[ruleta(fitness)])
-
+    print(pob_bin)
+    print(fitness)
+    fitness_ordenado = sort(fitness) #Generar array de fitneess ordenado
+    for i in range(len(fitness)):
+        if fitness_ordenado[0] == fitness[i]:
+            max_cromosoma_1 = pob_bin[i]
+        if fitness_ordenado[1] == fitness[i]:
+            max_cromosoma_2 = pob_bin[i]
+    print(max_cromosoma_1)
+    print(max_cromosoma_2)
 	#max_cromosoma_1 = sort(fitness)[0]
 	#max_cromosoma_2 = sort(fitness)[1]
 
@@ -64,32 +85,37 @@ for generacion in range(200):
         padre = resultado_ruleta[i]
         madre = resultado_ruleta[i + 1]
         punto_cross = random.randint(0,28)
-        crossover(pob_bin, padre, madre, punto_cross, prob_cross)
+        crossover(nueva_pob_bin, padre, madre, punto_cross, prob_cross)
 
     # Mutación
     for i in range(n):
-        mutar(pob_bin[i], prob_mut)
+        mutar(nueva_pob_bin[i], prob_mut)
 
     x_maximos.append(max(f_obj))
     x_minimos.append(min(f_obj))
     x_promedios.append(statistics.mean(f_obj))
 
-    # Resetear todos los datos menos los de la población binaria
+    # Resetear todos los datos
     poblacion = []
     f_obj = []
     fitness = []
+    pob_bin = nueva_pob_bin
 
     # Generar la nueva población en números enteros
     for i in range(n):
-        poblacion.append(int(''.join(pob_bin[i]), 2))
+        poblacion.append(pob_bin[i].entero())
 
     # Genera resultados de la función objetivo
     for i in range(n):
-        f_obj.append((poblacion[i]/(2**30 - 1))**2)
+        f_obj.append(pob_bin[i].f_obj())
 
     # Genera resultados de función fitness.
     for i in range(n):
         fitness.append(f_obj[i] / sum(f_obj))
 
+    max_crom.append(max(pob_bin.entero()).binario_lindo)
+    print(max_crom)
+
+max_crom = sort(max_crom)
 # Mostrar todo en un archivo HTML
-mostrar_info(''.join(max(pob_bin)), x_maximos, x_minimos, x_promedios, prob_cross, prob_mut)
+mostrar_info(''.join(max), x_maximos, x_minimos, x_promedios, prob_cross, prob_mut)

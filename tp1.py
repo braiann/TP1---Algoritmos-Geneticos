@@ -65,20 +65,16 @@ for i in range(n):
 for generacion in range(200):
     resultado_ruleta = [] # Lista que guarda los padres que resultarán de la selección.
     nueva_pob_bin = []
+
     for i in range(n):
         resultado_ruleta.append(pob_bin[ruleta(fitness)])
-    print(pob_bin)
-    print(fitness)
+
     fitness_ordenado = sort(fitness) #Generar array de fitneess ordenado
-    for i in range(len(fitness)):
+    for i in range(len(fitness)): #Seleccionar cromosomas maximos de las poblaciones
         if fitness_ordenado[0] == fitness[i]:
             max_cromosoma_1 = pob_bin[i]
         if fitness_ordenado[1] == fitness[i]:
             max_cromosoma_2 = pob_bin[i]
-    print(max_cromosoma_1)
-    print(max_cromosoma_2)
-	#max_cromosoma_1 = sort(fitness)[0]
-	#max_cromosoma_2 = sort(fitness)[1]
 
     # Crossover
     for i in range(0, 9, 2):
@@ -95,6 +91,7 @@ for generacion in range(200):
     x_minimos.append(min(f_obj))
     x_promedios.append(statistics.mean(f_obj))
 
+    #max_crom.append(max(poblacion))
     # Resetear todos los datos
     poblacion = []
     f_obj = []
@@ -113,9 +110,9 @@ for generacion in range(200):
     for i in range(n):
         fitness.append(f_obj[i] / sum(f_obj))
 
-    max_crom.append(max(pob_bin.entero()).binario_lindo)
-    print(max_crom)
 
-max_crom = sort(max_crom)
+    #print(max_crom)
+
+#max_crom = sort(max_crom)
 # Mostrar todo en un archivo HTML
-mostrar_info(''.join(max), x_maximos, x_minimos, x_promedios, prob_cross, prob_mut)
+mostrar_info(''.join(max(pob_bin)), x_maximos, x_minimos, x_promedios, prob_cross, prob_mut)
